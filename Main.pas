@@ -21,17 +21,17 @@ type
     Beenden1: TMenuItem;
     Hilfe1: TMenuItem;
     berdasProgramm1: TMenuItem;
-    SaveDialog1: TSaveDialog;
+    SaveDialog: TSaveDialog;
     N2: TMenuItem;
     ZurHeilwigWebsite1: TMenuItem;
-    PageControl1: TPageControl;
+    MainPageControl: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     profileLT: TListBox;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
-    Button7: TButton;
+    AddProfileBtn: TButton;
+    DeleteProfileBtn: TButton;
+    EditProfileBtn: TButton;
+    SetDefaultProfileBtn: TButton;
     Einstellungen1: TMenuItem;
     StatusBar1: TStatusBar;
     procedure Button1Click(Sender: TObject);
@@ -46,11 +46,11 @@ type
     procedure Button3Click(Sender: TObject);
     procedure profileLTClick(Sender: TObject);
     procedure profileLTExit(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    procedure DeleteProfileBtnClick(Sender: TObject);
     procedure TabSheet2Exit(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
+    procedure EditProfileBtnClick(Sender: TObject);
     procedure Einstellungen1Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure AddProfileBtnClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -67,7 +67,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit7, profileOptions, generalSettings, saveProfile;
+uses about, profileOptions, generalSettings, saveProfile;
 
 procedure TMainFrm.Beenden1Click(Sender: TObject);
 begin
@@ -128,7 +128,7 @@ Label1.Caption:='';
 Label2.Caption:='';
 end;
 
-procedure TMainFrm.Button4Click(Sender: TObject);
+procedure TMainFrm.AddProfileBtnClick(Sender: TObject);
 var
 profiles: TStringList;
 begin
@@ -146,12 +146,12 @@ MainFrm.Enabled:=false;
 saveProfileForm.Show;
 end;
 
-procedure TMainFrm.Button5Click(Sender: TObject);
+procedure TMainFrm.DeleteProfileBtnClick(Sender: TObject);
 begin
 ShowMessage('Hi');
 end;
 
-procedure TMainFrm.Button6Click(Sender: TObject);
+procedure TMainFrm.EditProfileBtnClick(Sender: TObject);
 begin
 profileOptionsForm.Show;
 end;
@@ -222,18 +222,18 @@ i:Integer;
 Pfad, Dateiname, Pfad2, Dateiname2:String;
 begin
 ShowMessage('Bitte wählen sie anschließen eine .vok Datei mit Aufgaben aus!');
-SaveDialog1.Title:='Aufgabendatei auswählen';
-if SaveDialog1.Execute then
+SaveDialog.Title:='Aufgabendatei auswählen';
+if SaveDialog.Execute then
 begin
-  Pfad := ExtractFilePath(SaveDialog1.FileName);
-  Dateiname := ExtractFileName(SaveDialog1.FileName);
+  Pfad := ExtractFilePath(SaveDialog.FileName);
+  Dateiname := ExtractFileName(SaveDialog.FileName);
 
   ShowMessage('Bitte wählen sie nun eine .vok Datei mit den entsprechenden Antworten aus!');
-  SaveDialog1.Title:='Antwortdatei auswählen';
-  if SaveDialog1.Execute then
+  SaveDialog.Title:='Antwortdatei auswählen';
+  if SaveDialog.Execute then
   begin
-    Pfad2 := ExtractFilePath(SaveDialog1.FileName);
-    Dateiname2 := ExtractFileName(SaveDialog1.FileName);
+    Pfad2 := ExtractFilePath(SaveDialog.FileName);
+    Dateiname2 := ExtractFileName(SaveDialog.FileName);
     answers.LoadFromFile(Pfad2+Dateiname2);
     questions.LoadFromFile(Pfad+Dateiname);
     requests.Clear;
@@ -245,7 +245,7 @@ begin
   ShowMessage('Keine Datei ausgewählt! Bitte versuchen sie es erneut.');
 end;
 
-//answers.LoadFromFile(ExtractFilePath(SaveDialog1.FileName)+ExtractFileName(SaveDialog1.FileName));
+//answers.LoadFromFile(ExtractFilePath(SaveDialog.FileName)+ExtractFileName(SaveDialog.FileName));
 
 end;
 
@@ -254,9 +254,9 @@ procedure TMainFrm.profileLTClick(Sender: TObject);
 begin
 if(profileLT.ItemIndex>-1) then
 begin
-  Button5.Enabled:=true;
-  Button6.Enabled:=true;
-  Button7.Enabled:=true;
+  DeleteProfileBtn.Enabled:=true;
+  EditProfileBtn.Enabled:=true;
+  SetDefaultProfileBtn.Enabled:=true;
 end;
 end;
 
@@ -276,9 +276,9 @@ end;
 
 procedure TMainFrm.TabSheet2Exit(Sender: TObject);
 begin
-Button5.Enabled:=false;
-Button6.Enabled:=false;
-Button7.Enabled:=false;
+DeleteProfileBtn.Enabled:=false;
+EditProfileBtn.Enabled:=false;
+SetDefaultProfileBtn.Enabled:=false;
 end;
 
 procedure TMainFrm.ZurHeilwigWebsite1Click(Sender: TObject);

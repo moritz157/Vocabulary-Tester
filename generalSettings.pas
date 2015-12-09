@@ -10,9 +10,9 @@ type
   TGeneralSettingsForm = class(TForm)
     ComboBox1: TComboBox;
     Label1: TLabel;
-    Button1: TButton;
-    Button2: TButton;
-    procedure Button1Click(Sender: TObject);
+    CancelBtn: TButton;
+    SaveSettingsBtn: TButton;
+    procedure CancelBtnClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -26,7 +26,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TGeneralSettingsForm.Button1Click(Sender: TObject);
+procedure TGeneralSettingsForm.CancelBtnClick(Sender: TObject);
 begin
 GeneralSettingsForm.Close;
 end;

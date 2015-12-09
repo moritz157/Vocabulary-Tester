@@ -9,11 +9,11 @@ uses
 
 type
   TsaveProfileForm = class(TForm)
-    Edit1: TEdit;
-    Button1: TButton;
-    Button2: TButton;
-    procedure Button2Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    ProfileNameEdt: TEdit;
+    CancelBtn: TButton;
+    SaveProfileBtn: TButton;
+    procedure SaveProfileBtnClick(Sender: TObject);
+    procedure CancelBtnClick(Sender: TObject);
     procedure FormHide(Sender: TObject);
   private
     { Private-Deklarationen }
@@ -29,24 +29,23 @@ implementation
 
 {$R *.dfm}
 
-uses Unit6, Main;
+uses Main;
 
-procedure TsaveProfileForm.Button1Click(Sender: TObject);
+procedure TsaveProfileForm.CancelBtnClick(Sender: TObject);
 begin
-  saveProfileForm.Hide;
+  saveProfileForm.Close;
 end;
 
-procedure TsaveProfileForm.Button2Click(Sender: TObject);
+procedure TsaveProfileForm.SaveProfileBtnClick(Sender: TObject);
 begin
-  profilesIni := TIniFile.Create(TPath.GetHomePath +
-    '\Abfrager\profiles\profiles.ini');
-  profilesIni.WriteString(Edit1.Text, 'Path', 'None');
+  profilesIni := TIniFile.Create(TPath.GetHomePath + '\Abfrager\profiles\profiles.ini');
+  profilesIni.WriteString(ProfileNameEdt.Text, 'Path', 'None');
   profilesIni.Free;
   if (MainFrm.profileLT.Items[0] = 'Kein Profil vorhanden') then
-    Form6.profileLT.Items.Clear;
-  Form6.profileLT.Items.Add(Edit1.Text);
-  Edit1.Text := '';
-  saveProfileForm.Hide;
+    MainFrm.profileLT.Items.Clear;
+  MainFrm.profileLT.Items.Add(ProfileNameEdt.Text);
+  ProfileNameEdt.Text := '';
+  saveProfileForm.Close;
 end;
 
 procedure TsaveProfileForm.FormHide(Sender: TObject);

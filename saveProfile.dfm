@@ -4,7 +4,7 @@ object saveProfileForm: TsaveProfileForm
   BorderStyle = bsDialog
   Caption = 'Profil speichern'
   ClientHeight = 71
-  ClientWidth = 182
+  ClientWidth = 171
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,7 +16,7 @@ object saveProfileForm: TsaveProfileForm
   OnHide = FormHide
   PixelsPerInch = 96
   TextHeight = 13
-  object Edit1: TEdit
+  object ProfileNameEdt: TEdit
     Left = 8
     Top = 8
     Width = 156
@@ -24,22 +24,22 @@ object saveProfileForm: TsaveProfileForm
     TabOrder = 0
     TextHint = 'Profilname'
   end
-  object Button1: TButton
+  object CancelBtn: TButton
     Left = 8
     Top = 32
     Width = 75
     Height = 25
     Caption = 'Abbrechen'
     TabOrder = 1
-    OnClick = Button1Click
+    OnClick = CancelBtnClick
   end
-  object Button2: TButton
+  object SaveProfileBtn: TButton
     Left = 89
     Top = 32
     Width = 75
     Height = 25
     Caption = 'Speichern'
     TabOrder = 2
-    OnClick = Button2Click
+    OnClick = SaveProfileBtnClick
   end
 end

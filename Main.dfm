@@ -19,7 +19,7 @@ object MainFrm: TMainFrm
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
-  object PageControl1: TPageControl
+  object MainPageControl: TPageControl
     Left = 8
     Top = 8
     Width = 389
@@ -124,16 +124,16 @@ object MainFrm: TMainFrm
         OnClick = profileLTClick
         OnExit = profileLTExit
       end
-      object Button4: TButton
+      object AddProfileBtn: TButton
         Left = 303
         Top = 16
         Width = 75
         Height = 25
         Caption = 'Hinzuf'#252'gen'
         TabOrder = 1
-        OnClick = Button4Click
+        OnClick = AddProfileBtnClick
       end
-      object Button5: TButton
+      object DeleteProfileBtn: TButton
         Left = 303
         Top = 47
         Width = 75
@@ -141,9 +141,9 @@ object MainFrm: TMainFrm
         Caption = 'Entfernen'
         Enabled = False
         TabOrder = 2
-        OnClick = Button5Click
+        OnClick = DeleteProfileBtnClick
       end
-      object Button6: TButton
+      object EditProfileBtn: TButton
         Left = 303
         Top = 78
         Width = 75
@@ -151,9 +151,9 @@ object MainFrm: TMainFrm
         Caption = 'Bearbeiten'
         Enabled = False
         TabOrder = 3
-        OnClick = Button6Click
+        OnClick = EditProfileBtnClick
       end
-      object Button7: TButton
+      object SetDefaultProfileBtn: TButton
         Left = 303
         Top = 109
         Width = 75
@@ -169,9 +169,11 @@ object MainFrm: TMainFrm
     Top = 253
     Width = 405
     Height = 19
-    Panels = <>
-    SimplePanel = True
-    SimpleText = 'Version 1.2'
+    Panels = <
+      item
+        Text = 'Version 1.3'
+        Width = 50
+      end>
     ExplicitLeft = 8
     ExplicitTop = 247
   end
@@ -211,7 +213,7 @@ object MainFrm: TMainFrm
       end
     end
   end
-  object SaveDialog1: TSaveDialog
+  object SaveDialog: TSaveDialog
     Filter = 'VOK-Dateien|*.vok'
     Left = 40
     Top = 176

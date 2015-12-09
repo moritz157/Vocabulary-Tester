@@ -32,16 +32,16 @@ object GeneralSettingsForm: TGeneralSettingsForm
     Items.Strings = (
       'Keine')
   end
-  object Button1: TButton
+  object CancelBtn: TButton
     Left = 32
     Top = 40
     Width = 75
     Height = 25
     Caption = 'Abbrechen'
     TabOrder = 1
-    OnClick = Button1Click
+    OnClick = CancelBtnClick
   end
-  object Button2: TButton
+  object SaveSettingsBtn: TButton
     Left = 153
     Top = 40
     Width = 75
