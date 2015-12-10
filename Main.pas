@@ -34,6 +34,9 @@ type
     SetDefaultProfileBtn: TButton;
     Einstellungen1: TMenuItem;
     StatusBar1: TStatusBar;
+    Language1: TMenuItem;
+    English1: TMenuItem;
+    Deutsch1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -51,6 +54,8 @@ type
     procedure EditProfileBtnClick(Sender: TObject);
     procedure Einstellungen1Click(Sender: TObject);
     procedure AddProfileBtnClick(Sender: TObject);
+    procedure English1Click(Sender: TObject);
+    procedure Deutsch1Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -151,6 +156,38 @@ begin
 ShowMessage('Hi');
 end;
 
+procedure TMainFrm.Deutsch1Click(Sender: TObject);
+begin
+Button1.Caption:='Neue Aufgabe';
+Button2.Caption:='Richtig';
+Button3.Caption:='Falsch';
+showAnsBt.Caption:='Lösung zeigen';
+MainMenu1.Items[0].Caption:='Datei';
+MainMenu1.Items[0].Items[0].Caption:='Öffnen';
+MainMenu1.Items[0].Items[1].Caption:='Einstellungen';
+MainMenu1.Items[0].Items[3].Caption:='Beenden';
+MainMenu1.Items[1].Caption:='Hilfe';
+MainMenu1.Items[1].Items[0].Caption:='Über das Programm';
+MainMenu1.Items[1].Items[2].Caption:='Zur Heilwig Website';
+AddProfileBtn.Caption:='Hinzufügen';
+EditProfileBtn.Caption:='Bearbeiten';
+DeleteProfileBtn.Caption:='Entfernen';
+SetDefaultProfileBtn.Caption:='Als Standart';
+TabSheet1.Caption:='Abfrage';
+
+Form7.Label2.Caption:='Abfrager';
+Form7.Label2.Left:=64;
+
+saveProfileForm.Caption:='Profil speichern';
+saveProfileForm.SaveProfileBtn.Caption:='Speichern';
+saveProfileForm.CancelBtn.Caption:='Abbrechen';
+saveProfileForm.ProfileNameEdt.TextHint:='Profilname';
+
+StatusBar1.Panels[1].Text:='Language: German';
+
+if(profileLT.Items[0]='No profile available') then profileLT.Items[0]:='Kein Profil vorhanden';
+end;
+
 procedure TMainFrm.EditProfileBtnClick(Sender: TObject);
 begin
 profileOptionsForm.Show;
@@ -159,6 +196,38 @@ end;
 procedure TMainFrm.Einstellungen1Click(Sender: TObject);
 begin
 GeneralSettingsForm.Show;
+end;
+
+procedure TMainFrm.English1Click(Sender: TObject);
+begin
+Button1.Caption:='New quest';
+Button2.Caption:='I`m Right';
+Button3.Caption:='I`m Wrong';
+showAnsBt.Caption:='Show Answer';
+MainMenu1.Items[0].Caption:='File';
+MainMenu1.Items[0].Items[0].Caption:='Open';
+MainMenu1.Items[0].Items[1].Caption:='Settings';
+MainMenu1.Items[0].Items[3].Caption:='Stop tester';
+MainMenu1.Items[1].Caption:='Help';
+MainMenu1.Items[1].Items[0].Caption:='About';
+MainMenu1.Items[1].Items[2].Caption:='To our school`s website';
+AddProfileBtn.Caption:='Add';
+EditProfileBtn.Caption:='Edit';
+DeleteProfileBtn.Caption:='Delete';
+SetDefaultProfileBtn.Caption:='Set Default';
+TabSheet1.Caption:='Test';
+
+Form7.Label2.Caption:='Vocabulary tester';
+Form7.Label2.Left:=20;
+
+saveProfileForm.Caption:='Save profile';
+saveProfileForm.SaveProfileBtn.Caption:='Save';
+saveProfileForm.CancelBtn.Caption:='Cancel';
+saveProfileForm.ProfileNameEdt.TextHint:='Name';
+
+StatusBar1.Panels[1].Text:='Language: English';
+
+if(profileLT.Items[0]='Kein Profil vorhanden') then profileLT.Items[0]:='No profile available';
 end;
 
 procedure TMainFrm.FormCreate(Sender: TObject);

@@ -41,7 +41,7 @@ begin
   profilesIni := TIniFile.Create(TPath.GetHomePath + '\Abfrager\profiles\profiles.ini');
   profilesIni.WriteString(ProfileNameEdt.Text, 'Path', 'None');
   profilesIni.Free;
-  if (MainFrm.profileLT.Items[0] = 'Kein Profil vorhanden') then
+  if (MainFrm.profileLT.Items[0] = 'Kein Profil vorhanden') or (MainFrm.profileLT.Items[0] = 'No profile available') then
     MainFrm.profileLT.Items.Clear;
   MainFrm.profileLT.Items.Add(ProfileNameEdt.Text);
   ProfileNameEdt.Text := '';

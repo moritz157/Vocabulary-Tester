@@ -3,7 +3,7 @@ object MainFrm: TMainFrm
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'MainFrm'
+  Caption = 'Main Form'
   ClientHeight = 272
   ClientWidth = 405
   Color = clBtnFace
@@ -172,10 +172,15 @@ object MainFrm: TMainFrm
     Panels = <
       item
         Text = 'Version 1.3'
+        Width = 70
+      end
+      item
+        Alignment = taRightJustify
+        BiDiMode = bdLeftToRight
+        ParentBiDiMode = False
+        Text = 'Language: German'
         Width = 50
       end>
-    ExplicitLeft = 8
-    ExplicitTop = 247
   end
   object MainMenu1: TMainMenu
     Left = 344
@@ -210,6 +215,17 @@ object MainFrm: TMainFrm
       object ZurHeilwigWebsite1: TMenuItem
         Caption = 'Zur Heilwig Website'
         OnClick = ZurHeilwigWebsite1Click
+      end
+    end
+    object Language1: TMenuItem
+      Caption = 'Language'
+      object English1: TMenuItem
+        Caption = 'English'
+        OnClick = English1Click
+      end
+      object Deutsch1: TMenuItem
+        Caption = 'Deutsch'
+        OnClick = Deutsch1Click
       end
     end
   end
