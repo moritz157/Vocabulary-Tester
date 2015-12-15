@@ -37,6 +37,7 @@ type
     Language1: TMenuItem;
     English1: TMenuItem;
     Deutsch1: TMenuItem;
+    ZurProjektwebsite1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -56,7 +57,10 @@ type
     procedure AddProfileBtnClick(Sender: TObject);
     procedure English1Click(Sender: TObject);
     procedure Deutsch1Click(Sender: TObject);
+    procedure SetDefaultProfileBtnClick(Sender: TObject);
+    procedure ZurProjektwebsite1Click(Sender: TObject);
   private
+    procedure loadQuestsFromProfile(profile:String);
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
@@ -64,15 +68,19 @@ type
 
 var
   MainFrm: TMainFrm;
-  questions, answers, requests: TStringList;
-  lastQuest, quest: Integer;
-  profilesIni: TIniFile;
+  selectedProfile: Integer;
+
 
 implementation
 
 {$R *.dfm}
 
 uses about, profileOptions, generalSettings, saveProfile;
+
+var
+  questions, answers, requests: TStringList;
+  lastQuest, quest: Integer;
+  profilesIni: TIniFile;
 
 procedure TMainFrm.Beenden1Click(Sender: TObject);
 begin
@@ -89,18 +97,25 @@ procedure TMainFrm.Button1Click(Sender: TObject);
 var
 loop: Boolean;
 begin
-loop:=true;
-Button2.Visible:=false;
-Button3.Visible:=false;
-Label2.Caption:='';
-while loop do begin
-quest:=Random(questions.Count);
-loop:=quest=lastQuest;
+if (questions.Count>0) then
+begin
+  loop:=true;
+  Button2.Visible:=false;
+  Button3.Visible:=false;
+  Label2.Caption:='';
+  while loop do begin
+  quest:=Random(questions.Count);
+  loop:=quest=lastQuest;
+  if(questions.Count=1) then loop:=false;
+  end;
+  Label1.Caption:=questions.Strings[quest];
+  lastQuest:=quest;
+  beep;
+  showAnsBt.Visible:=true;
+end else
+begin
+  ShowMessage('Du hast bereits alle Vokabeln gelernt!');
 end;
-Label1.Caption:=questions.Strings[quest];
-lastQuest:=quest;
-beep;
-showAnsBt.Visible:=true;
 end;
 
 procedure TMainFrm.Button2Click(Sender: TObject);
@@ -114,14 +129,17 @@ Label2.Caption:='';
 
 requestsYet:=strtoint(requests.Strings[lastQuest]);
 requestsYet:=requestsYet+1;
+//ShowMessage(inttostr(requestsYet)+' | '+requests.Strings[lastQuest]);
 requests.Strings[lastQuest]:=inttostr(requestsYet);
-if(requestsYet=5) then
+
+if(requestsYet=2) then
 begin
   beep;
   ShowMessage(questions.Strings[lastQuest]+' erfolgreich gelernt! :)');
   questions.Delete(lastQuest);
   answers.Delete(lastQuest);
   requests.Delete(lastQuest);
+  if(questions.Count=0) then ShowMessage('Lernen erfolgreich abgeschlossen');
 end;
 end;
 
@@ -168,20 +186,33 @@ MainMenu1.Items[0].Items[1].Caption:='Einstellungen';
 MainMenu1.Items[0].Items[3].Caption:='Beenden';
 MainMenu1.Items[1].Caption:='Hilfe';
 MainMenu1.Items[1].Items[0].Caption:='‹ber das Programm';
-MainMenu1.Items[1].Items[2].Caption:='Zur Heilwig Website';
+MainMenu1.Items[1].Items[2].Caption:='Zur Projektseite';
+MainMenu1.Items[1].Items[3].Caption:='Zur Heilwig Website';
+MainMenu1.Items[1].Items[3].Visible:=true;
 AddProfileBtn.Caption:='Hinzuf¸gen';
 EditProfileBtn.Caption:='Bearbeiten';
 DeleteProfileBtn.Caption:='Entfernen';
 SetDefaultProfileBtn.Caption:='Als Standart';
 TabSheet1.Caption:='Abfrage';
 
-Form7.Label2.Caption:='Abfrager';
-Form7.Label2.Left:=64;
+Form7.Label2.Caption:='Vokabel Tester';
+Form7.Label2.Left:=34;
 
 saveProfileForm.Caption:='Profil speichern';
 saveProfileForm.SaveProfileBtn.Caption:='Speichern';
 saveProfileForm.CancelBtn.Caption:='Abbrechen';
 saveProfileForm.ProfileNameEdt.TextHint:='Profilname';
+
+profileOptionsForm.Caption:='Profil Einstellungen';
+profileOptionsForm.pathEdt.TextHint:='Pfad';
+profileOptionsForm.browseBtn.Caption:='Durchsuchen';
+profileOptionsForm.cancelBtn.Caption:='Abbrechen';
+profileOptionsForm.saveBtn.Caption:='Speichern';
+
+generalSettingsForm.CancelBtn.Caption:='Abbrechen';
+generalSettingsForm.SaveSettingsBtn.Caption:='Speichern';
+generalSettingsForm.Caption:='Einstellungen';
+generalSettingsForm.Label1.Caption:='Profil beim Start:';
 
 StatusBar1.Panels[1].Text:='Language: German';
 
@@ -190,11 +221,13 @@ end;
 
 procedure TMainFrm.EditProfileBtnClick(Sender: TObject);
 begin
+Main.MainFrm.Enabled:=false;
 profileOptionsForm.Show;
 end;
 
 procedure TMainFrm.Einstellungen1Click(Sender: TObject);
 begin
+MainFrm.Enabled:=false;
 GeneralSettingsForm.Show;
 end;
 
@@ -210,7 +243,9 @@ MainMenu1.Items[0].Items[1].Caption:='Settings';
 MainMenu1.Items[0].Items[3].Caption:='Stop tester';
 MainMenu1.Items[1].Caption:='Help';
 MainMenu1.Items[1].Items[0].Caption:='About';
-MainMenu1.Items[1].Items[2].Caption:='To our school`s website';
+MainMenu1.Items[1].Items[2].Caption:='Projectwebsite';
+MainMenu1.Items[1].Items[3].Caption:='To our school`s website';
+MainMenu1.Items[1].Items[3].Visible:=false;
 AddProfileBtn.Caption:='Add';
 EditProfileBtn.Caption:='Edit';
 DeleteProfileBtn.Caption:='Delete';
@@ -225,6 +260,17 @@ saveProfileForm.SaveProfileBtn.Caption:='Save';
 saveProfileForm.CancelBtn.Caption:='Cancel';
 saveProfileForm.ProfileNameEdt.TextHint:='Name';
 
+profileOptionsForm.Caption:='Profile settings';
+profileOptionsForm.pathEdt.TextHint:='Path';
+profileOptionsForm.browseBtn.Caption:='Browse';
+profileOptionsForm.cancelBtn.Caption:='Cancel';
+profileOptionsForm.saveBtn.Caption:='Save';
+
+generalSettingsForm.CancelBtn.Caption:='Cancel';
+generalSettingsForm.SaveSettingsBtn.Caption:='Save';
+generalSettingsForm.Caption:='General Settings';
+GeneralSettingsForm.Label1.Caption:='Start-Up profile:';
+
 StatusBar1.Panels[1].Text:='Language: English';
 
 if(profileLT.Items[0]='Kein Profil vorhanden') then profileLT.Items[0]:='No profile available';
@@ -234,19 +280,11 @@ procedure TMainFrm.FormCreate(Sender: TObject);
 var
 i: Integer;
 profiles: TStringList;
+settingsIni:TIniFile;
+
 begin
 profiles:=TStringList.Create;
 //ShowMessage(TPath.GetHomePath+'\Abfrager\profiles');
-ForceDirectories(TPath.GetHomePath+'\Abfrager\profiles');
-if(FileExists(TPath.GetHomePath+'\Abfrager\profiles\profiles.ini')) then
-begin
-  //Profildatei vorhanden
-end else begin
-  //Profile NICHT vorhanden
-  //Profildatei erstellen
-  FileCreate(TPath.GetHomePath+'\Abfrager\profiles\profiles.ini');
-end;
-//Inhalt pr¸fen
 profilesIni:=TIniFile.Create(TPath.GetHomePath+'\Abfrager\profiles\profiles.ini');
 profilesIni.ReadSections(profiles);
 if(profiles.Count>0) then
@@ -254,26 +292,34 @@ begin
 profileLT.Items.Clear;
 for i := 0 to profiles.Count-1 do profileLT.Items.Add(profiles.Strings[i]);
 end;
-
-
 Randomize;
 requests:=TStringList.Create;
 questions:=TStringList.Create;
-questions.Add('vocare 1. Person Singular Futur');
+{questions.Add('vocare 1. Person Singular Futur');
 questions.Add('vocare 2. Person Singular Futur');
 questions.Add('vocare 3. Person Singular Futur');
 questions.Add('vocare 1. Person Plural Futur');
 questions.Add('vocare 2. Person Plural Futur');
 questions.Add('vocare 3. Person Plural Futur');
-
+}
 answers:=TStringList.Create;
-answers.Add('vocabo');
+{answers.Add('vocabo');
 answers.Add('vocabis');
 answers.Add('vocabit');
 answers.Add('vocabimus');
 answers.Add('vocabitis');
 answers.Add('vocabunt');
+}
 
+settingsIni:=TIniFile.Create(TPath.GetHomePath+'\Abfrager\settings.ini');
+if(settingsIni.SectionExists('General')) then
+begin
+  if(profiles.IndexOf(settingsIni.ReadString('General', 'startUpProfile', 'None'))>-1) then
+  begin
+      loadQuestsFromProfile(settingsIni.ReadString('General', 'startUpProfile', 'None'));
+  end;
+end;
+settingsIni.Free;
 for i := 0 to questions.Count do requests.Add('0');
 
 end;
@@ -289,15 +335,29 @@ procedure TMainFrm.OeffnenClick(Sender: TObject);
 var
 i:Integer;
 Pfad, Dateiname, Pfad2, Dateiname2:String;
+fileContent: TStringList;
 begin
-ShowMessage('Bitte w‰hlen sie anschlieﬂen eine .vok Datei mit Aufgaben aus!');
+fileContent:=TStringList.Create;
 SaveDialog.Title:='Aufgabendatei ausw‰hlen';
 if SaveDialog.Execute then
 begin
   Pfad := ExtractFilePath(SaveDialog.FileName);
   Dateiname := ExtractFileName(SaveDialog.FileName);
+  fileContent.LoadFromFile(Pfad+Dateiname);
+  answers.Clear;
+  questions.Clear;
+  for i:=0 TO Round(fileContent.Count/2)-1 do
+  begin
+    questions.Add(fileContent.Strings[i]);
+  end;
 
-  ShowMessage('Bitte w‰hlen sie nun eine .vok Datei mit den entsprechenden Antworten aus!');
+  for i:=Round(fileContent.Count/2) TO fileContent.Count-1 do
+  begin
+    answers.Add(fileContent.Strings[i]);
+  end;
+  requests.Clear;
+  for i := 0 to questions.Count do requests.Add('0');
+{  ShowMessage('Bitte w‰hlen sie nun eine .vok Datei mit den entsprechenden Antworten aus!');
   SaveDialog.Title:='Antwortdatei ausw‰hlen';
   if SaveDialog.Execute then
   begin
@@ -308,10 +368,7 @@ begin
     requests.Clear;
     for i := 0 to questions.Count do requests.Add('0');
   end else ShowMessage('Keine Datei ausgew‰hlt! Bitte versuchen sie es erneut.');
-
-end else
-begin
-  ShowMessage('Keine Datei ausgew‰hlt! Bitte versuchen sie es erneut.');
+}
 end;
 
 //answers.LoadFromFile(ExtractFilePath(SaveDialog.FileName)+ExtractFileName(SaveDialog.FileName));
@@ -331,8 +388,62 @@ end;
 
 procedure TMainFrm.profileLTExit(Sender: TObject);
 begin
-
+selectedProfile:=profileLT.ItemIndex;
 profileLT.ClearSelection;
+end;
+
+procedure TMainFrm.SetDefaultProfileBtnClick(Sender: TObject);
+var
+  Path: String;
+  fileContent: TStringList;
+  i: Integer;
+begin
+fileContent:=TStringList.Create;
+Path:=profilesIni.ReadString(profileLT.Items[selectedProfile], 'Path', 'None');
+if not (Path='None') then
+begin
+  fileContent.LoadFromFile(Path);
+  answers.Clear;
+  questions.Clear;
+  for i:=0 TO Round(fileContent.Count/2)-1 do
+  begin
+    questions.Add(fileContent.Strings[i]);
+  end;
+
+  for i:=Round(fileContent.Count/2) TO fileContent.Count-1 do
+  begin
+    answers.Add(fileContent.Strings[i]);
+  end;
+  requests.Clear;
+  for i := 0 to questions.Count do requests.Add('0');
+end;
+end;
+
+procedure TMainFrm.loadQuestsFromProfile(profile:String);
+var
+  Path: string;
+  fileContent: TStringList;
+  i:Integer;
+begin
+  fileContent := TStringList.Create;
+  Path := profilesIni.ReadString(profile, 'Path', 'None');
+  if not (Path = 'None') then
+  begin
+    fileContent.LoadFromFile(Path);
+    answers.Clear;
+    questions.Clear;
+    for i := 0 to Round(fileContent.Count / 2) - 1 do
+    begin
+      questions.Add(fileContent.Strings[i]);
+    end;
+    for i := Round(fileContent.Count / 2) to fileContent.Count - 1 do
+    begin
+      answers.Add(fileContent.Strings[i]);
+    end;
+    requests.Clear;
+    for i := 0 to questions.Count do
+      requests.Add('0');
+  end;
 end;
 
 procedure TMainFrm.showAnsBtClick(Sender: TObject);
@@ -353,6 +464,13 @@ end;
 procedure TMainFrm.ZurHeilwigWebsite1Click(Sender: TObject);
 begin
 ShellExecute(Handle, 'open', 'http://heilwig.de', nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TMainFrm.ZurProjektwebsite1Click(Sender: TObject);
+begin
+if(StatusBar1.Panels[1].Text='Language: German') then
+ShellExecute(Handle, 'open', 'http://moritz157.github.io/Vocabulary-Tester/german.html', nil, nil, SW_SHOWNORMAL) else
+ShellExecute(Handle, 'open', 'http://moritz157.github.io/Vocabulary-Tester/', nil, nil, SW_SHOWNORMAL);
 end;
 
 //INIFUNCTIONS
