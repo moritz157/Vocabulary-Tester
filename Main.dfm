@@ -1175,7 +1175,11 @@ object MainFrm: TMainFrm
     Height = 19
     Panels = <
       item
+<<<<<<< HEAD
         Text = 'Version 1.5'
+=======
+        Text = 'Version 1.4'
+>>>>>>> origin/master
         Width = 70
       end
       item
