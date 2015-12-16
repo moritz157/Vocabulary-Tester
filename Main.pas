@@ -61,6 +61,7 @@ type
     procedure ZurProjektwebsite1Click(Sender: TObject);
   private
     procedure loadQuestsFromProfile(profile:String);
+    procedure loadQuestsFromFile(path:String);
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
@@ -322,6 +323,12 @@ end;
 settingsIni.Free;
 for i := 0 to questions.Count do requests.Add('0');
 
+if ParamCount<>0 then
+begin
+  //ShowMessage('Paramstr gefunden: '+ParamStr(1));
+  loadQuestsFromFile(ParamStr(1));
+end;
+
 end;
 
 procedure TMainFrm.FormDestroy(Sender: TObject);
@@ -333,30 +340,14 @@ end;
 
 procedure TMainFrm.OeffnenClick(Sender: TObject);
 var
-i:Integer;
-Pfad, Dateiname, Pfad2, Dateiname2:String;
+Pfad2, Dateiname2:String;
 fileContent: TStringList;
 begin
 fileContent:=TStringList.Create;
 SaveDialog.Title:='Aufgabendatei auswählen';
 if SaveDialog.Execute then
 begin
-  Pfad := ExtractFilePath(SaveDialog.FileName);
-  Dateiname := ExtractFileName(SaveDialog.FileName);
-  fileContent.LoadFromFile(Pfad+Dateiname);
-  answers.Clear;
-  questions.Clear;
-  for i:=0 TO Round(fileContent.Count/2)-1 do
-  begin
-    questions.Add(fileContent.Strings[i]);
-  end;
-
-  for i:=Round(fileContent.Count/2) TO fileContent.Count-1 do
-  begin
-    answers.Add(fileContent.Strings[i]);
-  end;
-  requests.Clear;
-  for i := 0 to questions.Count do requests.Add('0');
+    loadQuestsFromFile(ExtractFilePath(SaveDialog.FileName)+ExtractFileName(SaveDialog.FileName));
 {  ShowMessage('Bitte wählen sie nun eine .vok Datei mit den entsprechenden Antworten aus!');
   SaveDialog.Title:='Antwortdatei auswählen';
   if SaveDialog.Execute then
@@ -444,6 +435,30 @@ begin
     for i := 0 to questions.Count do
       requests.Add('0');
   end;
+end;
+
+procedure TMainFrm.loadQuestsFromFile(path: String);
+var
+  i: Integer;
+  fileContent:TStringList;
+begin
+  fileContent:=TStringList.Create;
+  fileContent.LoadFromFile(path);
+  answers.Clear;
+  questions.Clear;
+  for i := 0 to Round(fileContent.Count / 2) - 1 do
+  begin
+    questions.Add(fileContent.Strings[i]);
+  end;
+  for i := Round(fileContent.Count / 2) to fileContent.Count - 1 do
+  begin
+    answers.Add(fileContent.Strings[i]);
+  end;
+  requests.Clear;
+  for i := 0 to questions.Count do
+    requests.Add('0');
+
+  fileContent.Free;
 end;
 
 procedure TMainFrm.showAnsBtClick(Sender: TObject);

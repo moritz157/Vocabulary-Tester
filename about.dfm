@@ -42,6 +42,6 @@ object Form7: TForm7
     Top = 101
     Width = 54
     Height = 13
-    Caption = 'Version 1.5'
+    Caption = 'Version 1.6'
   end
 end
