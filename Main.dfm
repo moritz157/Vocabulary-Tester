@@ -1030,6 +1030,7 @@ object MainFrm: TMainFrm
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
+      Tag = 3
       Caption = 'Abfrage'
       object Label1: TLabel
         Left = 3
@@ -1064,6 +1065,7 @@ object MainFrm: TMainFrm
         ParentFont = False
       end
       object Button1: TButton
+        Tag = 5
         Left = 3
         Top = 3
         Width = 375
@@ -1079,6 +1081,7 @@ object MainFrm: TMainFrm
         OnClick = Button1Click
       end
       object Button2: TButton
+        Tag = 17
         Left = 0
         Top = 122
         Width = 178
@@ -1089,6 +1092,7 @@ object MainFrm: TMainFrm
         OnClick = Button2Click
       end
       object Button3: TButton
+        Tag = 18
         Left = 200
         Top = 122
         Width = 178
@@ -1099,6 +1103,7 @@ object MainFrm: TMainFrm
         OnClick = Button3Click
       end
       object showAnsBt: TButton
+        Tag = 16
         Left = 104
         Top = 122
         Width = 177
@@ -1110,6 +1115,7 @@ object MainFrm: TMainFrm
       end
     end
     object TabSheet2: TTabSheet
+      Tag = 4
       Caption = 'Profile'
       ImageIndex = 1
       OnExit = TabSheet2Exit
@@ -1128,6 +1134,7 @@ object MainFrm: TMainFrm
         OnExit = profileLTExit
       end
       object AddProfileBtn: TButton
+        Tag = 6
         Left = 303
         Top = 16
         Width = 75
@@ -1137,6 +1144,7 @@ object MainFrm: TMainFrm
         OnClick = AddProfileBtnClick
       end
       object DeleteProfileBtn: TButton
+        Tag = 7
         Left = 303
         Top = 47
         Width = 75
@@ -1147,6 +1155,7 @@ object MainFrm: TMainFrm
         OnClick = DeleteProfileBtnClick
       end
       object EditProfileBtn: TButton
+        Tag = 8
         Left = 303
         Top = 78
         Width = 75
@@ -1157,6 +1166,7 @@ object MainFrm: TMainFrm
         OnClick = EditProfileBtnClick
       end
       object SetDefaultProfileBtn: TButton
+        Tag = 9
         Left = 303
         Top = 109
         Width = 75
@@ -1175,7 +1185,7 @@ object MainFrm: TMainFrm
     Height = 19
     Panels = <
       item
-        Text = 'Version 1.6'
+        Text = 'Version 1.7.1'
         Width = 70
       end
       item
@@ -1190,12 +1200,15 @@ object MainFrm: TMainFrm
     Left = 344
     Top = 192
     object Datei1: TMenuItem
+      Tag = 1
       Caption = 'Datei'
       object Oeffnen: TMenuItem
+        Tag = 10
         Caption = #214'ffnen'
         OnClick = OeffnenClick
       end
       object Einstellungen1: TMenuItem
+        Tag = 11
         Caption = 'Einstellungen'
         OnClick = Einstellungen1Click
       end
@@ -1203,13 +1216,25 @@ object MainFrm: TMainFrm
         Caption = '-'
       end
       object Beenden1: TMenuItem
+        Tag = 12
         Caption = 'Beenden'
         OnClick = Beenden1Click
       end
     end
+    object Werkzeuge1: TMenuItem
+      Tag = 25
+      Caption = 'Werkzeuge'
+      object VOKDateienerstellen1: TMenuItem
+        Tag = 24
+        Caption = 'VOK-Dateien erstellen'
+        OnClick = VOKDateienerstellen1Click
+      end
+    end
     object Hilfe1: TMenuItem
+      Tag = 2
       Caption = 'Hilfe'
       object berdasProgramm1: TMenuItem
+        Tag = 13
         Caption = #220'ber das Programm'
         OnClick = berdasProgramm1Click
       end
@@ -1217,10 +1242,12 @@ object MainFrm: TMainFrm
         Caption = '-'
       end
       object ZurProjektwebsite1: TMenuItem
+        Tag = 14
         Caption = 'Zur Projektwebsite'
         OnClick = ZurProjektwebsite1Click
       end
       object ZurHeilwigWebsite1: TMenuItem
+        Tag = 15
         Caption = 'Zur Heilwig Website'
         OnClick = ZurHeilwigWebsite1Click
       end

@@ -38,6 +38,8 @@ type
     English1: TMenuItem;
     Deutsch1: TMenuItem;
     ZurProjektwebsite1: TMenuItem;
+    Werkzeuge1: TMenuItem;
+    VOKDateienerstellen1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -59,6 +61,7 @@ type
     procedure Deutsch1Click(Sender: TObject);
     procedure SetDefaultProfileBtnClick(Sender: TObject);
     procedure ZurProjektwebsite1Click(Sender: TObject);
+    procedure VOKDateienerstellen1Click(Sender: TObject);
   private
     procedure loadQuestsFromProfile(profile:String);
     procedure loadQuestsFromFile(path:String);
@@ -76,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses about, profileOptions, generalSettings, saveProfile;
+uses about, profileOptions, generalSettings, saveProfile, createFiles, Sprache;
 
 var
   questions, answers, requests: TStringList;
@@ -177,7 +180,7 @@ end;
 
 procedure TMainFrm.Deutsch1Click(Sender: TObject);
 begin
-Button1.Caption:='Neue Aufgabe';
+{Button1.Caption:='Neue Aufgabe';
 Button2.Caption:='Richtig';
 Button3.Caption:='Falsch';
 showAnsBt.Caption:='Lösung zeigen';
@@ -218,6 +221,8 @@ generalSettingsForm.Label1.Caption:='Profil beim Start:';
 StatusBar1.Panels[1].Text:='Language: German';
 
 if(profileLT.Items[0]='No profile available') then profileLT.Items[0]:='Kein Profil vorhanden';
+}
+Spracheinstellung(sp_deutsch);
 end;
 
 procedure TMainFrm.EditProfileBtnClick(Sender: TObject);
@@ -234,7 +239,7 @@ end;
 
 procedure TMainFrm.English1Click(Sender: TObject);
 begin
-Button1.Caption:='New quest';
+{Button1.Caption:='New quest';
 Button2.Caption:='I`m Right';
 Button3.Caption:='I`m Wrong';
 showAnsBt.Caption:='Show Answer';
@@ -275,6 +280,8 @@ GeneralSettingsForm.Label1.Caption:='Start-Up profile:';
 StatusBar1.Panels[1].Text:='Language: English';
 
 if(profileLT.Items[0]='Kein Profil vorhanden') then profileLT.Items[0]:='No profile available';
+}
+Spracheinstellung(sp_englisch);
 end;
 
 procedure TMainFrm.FormCreate(Sender: TObject);
@@ -474,6 +481,11 @@ begin
 DeleteProfileBtn.Enabled:=false;
 EditProfileBtn.Enabled:=false;
 SetDefaultProfileBtn.Enabled:=false;
+end;
+
+procedure TMainFrm.VOKDateienerstellen1Click(Sender: TObject);
+begin
+createFilesFrm.Show;
 end;
 
 procedure TMainFrm.ZurHeilwigWebsite1Click(Sender: TObject);

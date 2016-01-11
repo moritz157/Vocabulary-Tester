@@ -6,7 +6,9 @@ uses
   about in 'about.pas' {Form7},
   profileOptions in 'profileOptions.pas' {profileOptionsForm},
   generalSettings in 'generalSettings.pas' {GeneralSettingsForm},
-  saveProfile in 'saveProfile.pas' {saveProfileForm};
+  saveProfile in 'saveProfile.pas' {saveProfileForm},
+  createFiles in 'createFiles.pas' {createFilesFrm},
+  Sprache in '..\..\..\RAD Studio\Projekte\Sprache.pas';
 
 {$R *.res}
 
@@ -18,5 +20,6 @@ begin
   Application.CreateForm(TprofileOptionsForm, profileOptionsForm);
   Application.CreateForm(TGeneralSettingsForm, GeneralSettingsForm);
   Application.CreateForm(TsaveProfileForm, saveProfileForm);
+  Application.CreateForm(TcreateFilesFrm, createFilesFrm);
   Application.Run;
 end.

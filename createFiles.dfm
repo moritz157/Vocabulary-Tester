@@ -1,12 +1,10 @@
-object profileOptionsForm: TprofileOptionsForm
-  Tag = 22
+object createFilesFrm: TcreateFilesFrm
+  Tag = 24
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
-  Caption = 'Profil Einstellungen'
-  ClientHeight = 68
-  ClientWidth = 374
+  Caption = 'VOK-Dateien erstellen'
+  ClientHeight = 267
+  ClientWidth = 532
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -1016,53 +1014,134 @@ object profileOptionsForm: TprofileOptionsForm
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000}
+  KeyPreview = True
+  Menu = MainMenu1
   OldCreateOrder = False
-  Position = poScreenCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
-  object pathEdt: TEdit
-    Tag = 34
+  object ListView1: TListView
     Left = 8
-    Top = 10
-    Width = 257
-    Height = 21
-    TabStop = False
-    TabOrder = 0
-    TextHint = 'Pfad'
-  end
-  object browseBtn: TButton
-    Tag = 35
-    Left = 271
     Top = 8
-    Width = 90
-    Height = 25
-    Caption = 'Durchsuchen'
+    Width = 352
+    Height = 249
+    Columns = <
+      item
+        AutoSize = True
+        Caption = 'Frage'
+        Tag = 26
+      end
+      item
+        AutoSize = True
+        Caption = 'Antwort'
+        Tag = 27
+      end>
+    ColumnClick = False
+    GridLines = True
+    ReadOnly = True
+    TabOrder = 0
+    ViewStyle = vsReport
+    OnClick = ListView1Click
+  end
+  object EditGroup: TGroupBox
+    Left = 366
+    Top = 95
+    Width = 155
+    Height = 145
+    Caption = 'Bearbeiten'
     TabOrder = 1
-    OnClick = browseBtnClick
+    Visible = False
+    object questEdt: TEdit
+      Tag = 26
+      Left = 16
+      Top = 21
+      Width = 121
+      Height = 21
+      TabOrder = 0
+      TextHint = 'Frage'
+    end
+    object ansEdt: TEdit
+      Tag = 27
+      Left = 16
+      Top = 48
+      Width = 121
+      Height = 21
+      TabOrder = 1
+      TextHint = 'Antwort'
+    end
+    object saveEditBtn: TButton
+      Tag = 30
+      Left = 24
+      Top = 75
+      Width = 105
+      Height = 25
+      Caption = 'Vokabel Speichern'
+      TabOrder = 2
+      OnClick = saveEditBtnClick
+    end
+    object cancelEditBtn: TButton
+      Tag = 21
+      Left = 40
+      Top = 106
+      Width = 75
+      Height = 25
+      Caption = 'Abbrechen'
+      TabOrder = 3
+      OnClick = cancelEditBtnClick
+    end
   end
-  object cancelBtn: TButton
-    Tag = 21
-    Left = 56
-    Top = 37
-    Width = 75
-    Height = 25
-    Caption = 'Abbrechen'
+  object Button3: TButton
+    Tag = 28
+    Left = 366
+    Top = 16
+    Width = 158
+    Height = 33
+    Caption = 'Neue Vokabel'
     TabOrder = 2
-    OnClick = cancelBtnClick
+    OnClick = Button3Click
   end
-  object saveBtn: TButton
-    Left = 239
-    Top = 37
-    Width = 75
-    Height = 25
-    Caption = 'Speichern'
+  object Button4: TButton
+    Tag = 29
+    Left = 366
+    Top = 55
+    Width = 158
+    Height = 34
+    Caption = 'Vokabel l'#246'schen'
+    Enabled = False
     TabOrder = 3
-    OnClick = saveBtnClick
+    OnClick = Button4Click
+  end
+  object MainMenu1: TMainMenu
+    Left = 184
+    Top = 96
+    object Datei1: TMenuItem
+      Caption = 'Datei'
+      object Speichern1: TMenuItem
+        Caption = 'Speichern'
+        OnClick = Speichern1Click
+      end
+      object Speichernunter1: TMenuItem
+        Caption = 'Speichern unter'
+        OnClick = Speichernunter1Click
+      end
+      object ffnen1: TMenuItem
+        Caption = #214'ffnen'
+        OnClick = ffnen1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Beenden1: TMenuItem
+        Caption = 'Beenden'
+        OnClick = Beenden1Click
+      end
+    end
   end
   object SaveDialog1: TSaveDialog
-    Filter = 'VOK-Files|*.vok'
-    Options = [ofReadOnly, ofHideReadOnly, ofEnableSizing]
-    Left = 176
-    Top = 32
+    Filter = 'VOK-Datei|*.vok'
+    Left = 264
+    Top = 152
   end
 end

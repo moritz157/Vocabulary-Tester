@@ -105,6 +105,11 @@
 				<Form>saveProfileForm</Form>
 				<FormType>dfm</FormType>
 			</DCCReference>
+			<DCCReference Include="createFiles.pas">
+				<Form>createFilesFrm</Form>
+				<FormType>dfm</FormType>
+			</DCCReference>
+			<DCCReference Include="..\..\..\RAD Studio\Projekte\Sprache.pas"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>

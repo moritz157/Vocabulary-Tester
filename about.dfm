@@ -38,10 +38,10 @@ object Form7: TForm7
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 80
+    Left = 72
     Top = 101
-    Width = 54
+    Width = 64
     Height = 13
-    Caption = 'Version 1.6'
+    Caption = 'Version 1.7.1'
   end
 end

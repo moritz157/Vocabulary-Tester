@@ -1020,6 +1020,7 @@ object GeneralSettingsForm: TGeneralSettingsForm
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
+    Tag = 20
     Left = 8
     Top = 11
     Width = 80
@@ -1035,6 +1036,7 @@ object GeneralSettingsForm: TGeneralSettingsForm
     Text = 'Keine'
   end
   object CancelBtn: TButton
+    Tag = 21
     Left = 40
     Top = 35
     Width = 75
@@ -1044,6 +1046,7 @@ object GeneralSettingsForm: TGeneralSettingsForm
     OnClick = CancelBtnClick
   end
   object SaveSettingsBtn: TButton
+    Tag = 22
     Left = 153
     Top = 35
     Width = 75
