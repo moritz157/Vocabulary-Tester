@@ -24,6 +24,8 @@ type
     cancelEditBtn: TButton;
     Button3: TButton;
     Button4: TButton;
+    Bearbeiten1: TMenuItem;
+    Dateiimportieren1: TMenuItem;
     procedure Beenden1Click(Sender: TObject);
     procedure ffnen1Click(Sender: TObject);
     procedure loadQuestsFromFile(path: String);
@@ -38,8 +40,10 @@ type
     procedure Speichern1Click(Sender: TObject);
     procedure Speichernunter1Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Dateiimportieren1Click(Sender: TObject);
   private
     procedure saveListToFile(saveAs:Boolean);
+    procedure addFileToEditor(fileName:String);
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
@@ -111,6 +115,41 @@ begin
   fileContent.Free;
 end;
 
+procedure TcreateFilesFrm.addFileToEditor(fileName:String);
+var
+  i, currentListCount:Integer;
+  fileContent, tempQuest, tempAns:TStringList;
+begin
+  fileContent:=TStringList.Create;
+  tempQuest:=TStringList.Create;
+  tempAns:=TStringList.Create;
+  fileContent.LoadFromFile(fileName);
+  for i := 0 to Round(fileContent.Count / 2) - 1 do
+  begin
+    tempQuest.Add(fileContent.Strings[i]);
+  end;
+  for i := Round(fileContent.Count / 2) to fileContent.Count - 1 do
+  begin
+    tempAns.Add(fileContent.Strings[i]);
+  end;
+
+  {ShowMessage(inttostr(i));
+  ShowMessage(inttostr(tempQuest.Count));
+  ShowMessage(inttostr(tempAns.Count));
+  ShowMessage(inttostr(fileContent.Count));    }
+  //iuhhh
+  currentListCount:=ListView1.Items.Count;
+  for i := 0 to tempQuest.Count-1 do
+  begin
+    ListView1.Items.Add.Caption:=tempQuest[i];
+    ListView1.Items.Item[currentListCount+i].SubItems.Add(tempAns[i]);
+  end;
+
+  tempQuest.Free;
+  tempAns.Free;
+  fileContent.Free;
+end;
+
 procedure TcreateFilesFrm.Speichern1Click(Sender: TObject);
 begin
 saveListToFile(false);
@@ -124,6 +163,14 @@ end;
 procedure TcreateFilesFrm.cancelEditBtnClick(Sender: TObject);
 begin
 EditGroup.Visible:=false;
+end;
+
+procedure TcreateFilesFrm.Dateiimportieren1Click(Sender: TObject);
+begin
+  if(SaveDialog1.Execute) then
+  begin
+    addFileToEditor(ExtractFilePath(SaveDialog1.FileName)+ExtractFileName(SaveDialog1.FileName));
+  end;
 end;
 
 procedure TcreateFilesFrm.ffnen1Click(Sender: TObject);

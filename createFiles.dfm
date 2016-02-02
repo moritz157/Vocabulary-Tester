@@ -1138,6 +1138,13 @@ object createFilesFrm: TcreateFilesFrm
         OnClick = Beenden1Click
       end
     end
+    object Bearbeiten1: TMenuItem
+      Caption = 'Bearbeiten'
+      object Dateiimportieren1: TMenuItem
+        Caption = 'Datei importieren'
+        OnClick = Dateiimportieren1Click
+      end
+    end
   end
   object SaveDialog1: TSaveDialog
     Filter = 'VOK-Datei|*.vok'
